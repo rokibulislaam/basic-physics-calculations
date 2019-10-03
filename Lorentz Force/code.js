@@ -29,7 +29,9 @@ function radioChecked() {
 }
 function calcLorentzForce() {
   let elecArray = [];
-  let charge = parseFloat(document.getElementById("charge").value);
+  let charge =
+    Math.pow(10, -19) * parseFloat(document.getElementById("charge").value);
+  console.log(`Charge is ${charge}`);
   elecArray[0] = document.getElementById("elec_i").value
     ? parseFloat(document.getElementById("elec_i").value)
     : 0;
@@ -99,7 +101,7 @@ function calcLorentzForce() {
     );
     let lorentzForce =
       charge * electricField +
-      charge * velocity * magField * Math.sin(Math.PI / angle);
+      charge * velocity * magField * Math.sin((Math.PI / 180) * angle);
     document.getElementById("result").innerHTML = `
     <div class="alert success">
     The value of Lorentz Force is <strong>${lorentzForce} N</strong> 
