@@ -1,88 +1,148 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Finding Lorentz Force</title>
+    <link rel="stylesheet" href="materialize.css" />
     <link rel="stylesheet" href="./index.css" />
     <script src="./code.js"></script>
-</head>
+    <script src="./materialize.js"></script>
+  </head>
 
-<body>
+  <body class="row">
+    <div class="container">
+      <div class="container col s12">
+        <!-- Input in in vector or not -->
+        <h3>Finding Lorentz Force from given parameters</h3>
+        <h4>Please select the given data type:</h4>
+        <form action="#">
+          <p>
+            <label>
+              <input type="radio" id="vector" onclick="radioChecked()" />
+              <span>Vector (<b>F</b>=q<b>E</b>+q<b>v</b> x <b>B</b>)</span>
+            </label>
+          </p>
+          <p>
+            <label>
+              <input type="radio" id="scalar" onclick="radioChecked()" />
+              <span> Scalar (F=qE + qvBsinθ)</span>
+            </label>
+          </p>
+        </form>
+        <br />
+        <a class="waves-effect waves-light btn-small red" onclick="resetInput()"
+          >Reset Selection</a
+        >
+        <br />
+        <br />
+        <!-- Info -->
+        <div style="display: none" id="info" class="alert info">
+          <span onclick="alert()" class="closebtn">&times;</span>
+          <strong>Info!</strong> Input values are expcted in SI unit.
+        </div>
 
-<!-- Input in in vector or not -->
-<h1>Finding Lorentz Force from given parameters</h1>
-
-<h3>Please select the value of velocity and Magnetic Filed is in:</h3>
-<label for="vector">vector</label>
-<input type="radio" id="vector" onclick="radioChecked()" required /> <span>(<b>F</b>=q<b>E</b>+q<b>v</b> x <b>B</b>)</span>
-<br />
-<label for="scalar">Scalar</label>
-<input type="radio" id="scalar" onclick="radioChecked()" required /> <span>(F=qE + qvBsinθ)</span>
-<br />
-<button onclick="resetInput()">Reset Selection</button>
-<br>
-
-    <!-- Value of charge -->
-    <div style="display: none" id="charge_container">
-
-        <label for="charge">Please enter the value of charge "q" :</label>
-        <input type="number" id="charge" placeholder="Enter the value of charge" required />
+        <!-- Value of charge -->
+        <div style="display: none" id="charge_container">
+          <div class="input-field">
+            <label for="charge">Please enter the value of charge "q" :</label>
+            <input type="number" id="charge" />
+          </div>
+        </div>
+        <!-- Input Value i.e. Magnetic field and Velocity -->
+        <!-- Scalar Quantity -->
+        <div id="scalar_input" style="display: none">
+          <div class="input-field">
+            <label for="scalar_elec"
+              >Enter the magnitude of Electric Field:
+            </label>
+            <input id="scalar_elec" type="number" />
+          </div>
+          <div class="input-field">
+            <label for="scalar_mag"
+              >Enter the magnitude of Magnetic Field:
+            </label>
+            <input id="scalar_mag" type="number" />
+          </div>
+          <div class="input-field">
+            <label for="scalar_vel">Enter the magnitude of Velocity: </label>
+            <input id="scalar_vel" type="number" /><br />
+          </div>
+          <div class="input-field">
+            <label for="scalar_vel"
+              >Enter the angle between velocity and magnetic field:
+            </label>
+            <input id="angle" type="number" />
+          </div>
+        </div>
+        <!--Vector Quantity  -->
+        <div id="vector_input" style="display: none">
+          <!-- Value of electric field -->
+          <h4>Enter Electric Field for electrical force:</h4>
+          <div class="input-field col s4">
+            <input type="number" class="electric_field" id="elec_i" />
+            <label for="elec_i">coefficient of i^ </label>
+          </div>
+          <div class="input-field col s4">
+            <span class="prefix">(+)</span>
+            <input type="number" class="electric_field" id="elec_j" />
+            <label for="elec_j"> coefficient of j^ </label>
+          </div>
+          <div class="input-field col s4">
+            <span class="prefix">(+)</span>
+            <input type="number" class="electric_field" id="elec_k" /><label
+              for="elec_k"
+              >coefficient of k^</label
+            >
+          </div>
+          <br />
+          <!-- Value of Velocity -->
+          <h4>Enter the value of velocity in vector form</h4>
+          <div class="input-field col s4">
+            <input type="number" id="vel_i" />
+            <label for="vel_i">cefficient of i^ </label>
+          </div>
+          <div class="input-field col s4">
+            <span class="prefix">(+)</span>
+            <input type="number" id="vel_j" />
+            <label for="vel_j">cefficient of j^</label>
+          </div>
+          <div class="input-field col s4">
+            <span class="prefix">(+)</span>
+            <input type="number" id="vel_k" />
+            <label for="vel_k"> cefficient of k^</label>
+          </div>
+          <!-- Value of magnetic field -->
+          <h4>Enter the value of magnetic field in vector form:</h4>
+          <div class="input-field col s4">
+            <input type="number" id="mag_i" />
+            <label for="mag_i">cefficient of i^ </label>
+          </div>
+          <div class="input-field col s4">
+            <span class="prefix">(+)</span>
+            <input type="number" id="mag_j" />
+            <label for="mag_j">cefficient of j^</label>
+          </div>
+          <div class="input-field col s4">
+            <span class="prefix">(+)</span>
+            <input type="number" id="mag_k" />
+            <label for="mag_k">cefficient of k^</label>
+          </div>
+        </div>
+        <!-- Calucalte Lorentz Force -->
+        <br />
+        <a
+          class="waves-effect waves-light green btn-small"
+          style="display:none"
+          id="calculate_button"
+          onclick="calcLorentzForce()"
+          >Calculate Lorentz Force</a
+        >
+        <P id="result" style="display: none; font-size: 1.5em;"
+          >Click on 'Calculate Lorentz Force' button to get the result
+        </P>
+      </div>
     </div>
-
-    <!-- Input Value i.e. Magnetic field and Velocity -->
-    <!-- Scalar Quantity -->
-    <div id="scalar_input" style="display: none">
-        <label for="scalar_elec">Enter the magnitude of Electric Field:
-        </label>
-        <input id="scalar_elec" type="number" placeholder="Value of electric field" />
-        </br>
-        <label for="scalar_mag">Enter the magnitude of Magnetic Field:
-        </label>
-        <input id="scalar_mag" type="number" placeholder="Value of magnetic field" />
-        </br>
-        <label for="scalar_vel">Enter the magnitude of Velocity:
-        </label>
-        <input id="scalar_vel" type="number" placeholder="Value of velocity" /><br>
-        <label for="scalar_vel">Enter the angle between velocity and magnetic field:
-        </label>
-        <input id="angle" type="number" placeholder="Value of angle" />
-    </div>
-
-    <!--Vector Quantity  -->
-    <div id="vector_input" style="display: none">
-        <!-- Value of electric field -->
-        <h3>Enter Electric Field for electrical force:</h3>
-    <input type="number" class="electric_field" required id="elec_i" placeholder="coefficient">
-    <label for="elec_i">i^ (+)</label>
-    <input type="number" class="electric_field" required id="elec_j" placeholder="coefficient">
-    <label for="elec_j">j^ (+)</label>
-    <input type="number" class="electric_field" required id="elec_k" placeholder="coefficient">
-    <label for="elec_k">k^</label>
-        <!-- Value of Velocity -->
-        <h3>Enter the value of velocity in vector form</h3>
-        <input type="number" required id="vel_i" placeholder="coefficient" />
-        <label for="vel_i">i^ (+)</label>
-        <input type="number" required id="vel_j" placeholder="coefficient" />
-        <label for="vel_j">j^ (+)</label>
-        <input type="number" required id="vel_k" placeholder="coefficient" />
-        <label for="vel_k">k^</label>
-        
-        <!-- Value of magnetic field -->
-        <h3>Enter the value of magnetic field in vector form:</h3>
-        <input type="number" required id="mag_i" placeholder="coefficient">
-        <label for="mag_i">i^ (+)</label>
-        <input type="number" required id="mag_j" placeholder="coefficient">
-        <label for="mag_j">j^ (+)</label>
-        <input type="number" required id="mag_k" placeholder="coefficient">
-        <label for="mag_k">k^</label>
-    </div>
-    <!-- Calucalte Lorentz Force -->
-    <br>
-    <button style="display:none" id="calculate_button" onclick="calcLorentzForce()">Calculate Lorentz Force</button>
-    <P id="result" style="display: none; font-size: 1.5em;">Click on 'Calculate Lorentz Force' button to get the result</P>
-</body>
-
+  </body>
 </html>

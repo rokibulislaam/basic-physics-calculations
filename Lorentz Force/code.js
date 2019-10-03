@@ -8,6 +8,7 @@ function resetInput() {
   document.getElementById("calculate_button").style.display = "none";
   document.getElementById("charge_container").style.display = "none";
   document.getElementById("result").style.display = "none";
+  document.getElementById("info").style.display = "none";
   document.getElementById(
     "result"
   ).innerText = `Click on 'Calculate Lorentz Force' button to get the result`;
@@ -24,6 +25,7 @@ function radioChecked() {
   document.getElementById("calculate_button").style.display = "block";
   document.getElementById("result").style.display = "block";
   document.getElementById("charge_container").style.display = "block";
+  document.getElementById("info").style.display = "block";
 }
 function calcLorentzForce() {
   let elecArray = [];
@@ -77,11 +79,16 @@ function calcLorentzForce() {
     console.log(
       `${lorentzForce[0]}i^ (+) ${lorentzForce[1]}j^ (+) ${lorentzForce[2]}k^`
     );
-    document.getElementById(
-      "result"
-    ).innerText = `The value of Lorentz Force is ${lorentzForce[0]}i^ (+) ${
+    document.getElementById("result").innerHTML = `
+    <div class="alert success">
+    The value of Lorentz Force is <strong>${lorentzForce[0]}i^ (+) ${
       lorentzForce[1]
-    }j^ (+) ${lorentzForce[2]}k^ N`;
+    }j^ (+) ${lorentzForce[2]}k^ N</strong> </div>`;
+    M.toast({
+      html: `The value of Lorentz Force is ${lorentzForce[0]}i^ (+) ${
+        lorentzForce[1]
+      }j^ (+) ${lorentzForce[2]}k^ N`
+    });
   }
   if (document.getElementById("scalar").checked === true) {
     let magField = parseFloat(document.getElementById("scalar_mag").value);
@@ -93,9 +100,20 @@ function calcLorentzForce() {
     let lorentzForce =
       charge * electricField +
       charge * velocity * magField * Math.sin(Math.PI / angle);
-    document.getElementById(
-      "result"
-    ).innerText = `The value of Lorentz Force is ${lorentzForce} N`;
+    document.getElementById("result").innerHTML = `
+    <div class="alert success">
+    The value of Lorentz Force is <strong>${lorentzForce} N</strong> 
+</div>
+    `;
     console.log(lorentzForce);
+    M.toast({ html: `The value of Lorentz Force is ${lorentzForce} N` });
   }
+}
+function alert() {
+  var close = document.getElementById("info");
+  close.style.opacity = "0";
+
+  setTimeout(function() {
+    close.style.display = "none";
+  }, 600);
 }

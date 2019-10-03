@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="stylesheet" href="./index.css" />
-    <script src="./plotly.js"></script>
+    <script src="./canvas.js"></script>
+    <script src="./index.js"></script>
     <title>
       Graph betweeen magenetic field and distance from the center of the
       circular coil carrying current
@@ -18,7 +19,12 @@
     <input type="number" id="current" placeholder="Value of current" />
     <br />
     <label for="turns">Enter number of turns in the coil:</label>
-    <input type="number" required placeholder="Number of turns in the coil" />
+    <input
+      id="turns"
+      type="number"
+      required
+      placeholder="Number of turns in the coil"
+    />
     <br />
     <label for="radius">Enter the radius of the current carrying coil:</label>
     <input
@@ -38,12 +44,21 @@
     <input type="number" required id="distance3" placeholder="distance" />
 
     <br />
-    <button>Calculate B1, B2, B3 for x1, x2 and x3</button>
+    <button onclick="calucalteMagField()">
+      Calculate B1, B2, B3 for x1, x2 and x3
+    </button>
     <p id="result"></p>
-    <div id="graph">
-      graph goes here
-    </div>
     <br />
-    <button>View ditance vs magenetic field graph</button>
+    <h3>The Graph:</h3>
+
+    <div
+      id="chartContainer"
+      style="display: none; height: 370px; width: 100%;"
+    ></div>
+
+    <br />
+    <button onclick="getGraph()">
+      View ditance vs magenetic field graph
+    </button>
   </body>
 </html>
