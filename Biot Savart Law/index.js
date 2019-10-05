@@ -1,6 +1,6 @@
 function calucalteMagField() {
   let turns;
-  let permiability = 0.0000001;
+  let permiability = (4 * Math.PI * Math.pow(10, -7)) / 2;
   let current = parseFloat(document.getElementById("current").value);
   let radius = parseFloat(document.getElementById("radius").value);
   document.getElementById("turns").value
@@ -27,7 +27,7 @@ function calucalteMagField() {
 function getGraph() {
   document.getElementById("chartContainer").style.display = "block";
   let turns;
-  let permiability = 0.0000001;
+  let permiability = 4 * Math.PI * Math.pow(10, -7);
   let current = parseFloat(document.getElementById("current").value);
   let radius = parseFloat(document.getElementById("radius").value);
   document.getElementById("turns").value
@@ -54,7 +54,7 @@ function getGraph() {
     },
     axisY: {
       title: "Magnetic Field (B)",
-      suffix: "Henry"
+      suffix: "Tesla"
     },
     axisX: {
       title: "Distance (x)",
