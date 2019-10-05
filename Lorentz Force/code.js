@@ -117,5 +117,4 @@ function alert() {
 
   setTimeout(function() {
     close.style.display = "none";
-  }, 600);
-}
+  }, 600);}
